@@ -5,12 +5,14 @@ function Login() {
   const [password, setPassword] = useState("");
   const [users, setUsers] = useState([]);
 
-  const SECRET = import.meta.env.VITE_APP_SECRET_PASSWORD;
+  const BASE_URL = import.meta.env.VITE_APP_API_URL;        // https://jsonplaceholder.typicode.com
+  const SECRET = import.meta.env.VITE_APP_SECRET_PASSWORD;  // SECRET123
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/users?_limit=2")
+    fetch(`${BASE_URL}/users?_limit=3`)
       .then((response) => response.json())
-      .then((data) => setUsers(data));
+      .then((data) => setUsers(data))
+      .catch((err) => console.error("Failed to fetch users:", err));
   }, []);
 
   function handleLogin() {
@@ -29,6 +31,7 @@ function Login() {
     localStorage.setItem("loggedInUser", JSON.stringify(foundUser));
     window.location.href = "/todos";
   }
+
   return (
     <div>
       <h2>Login</h2>
