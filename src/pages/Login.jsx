@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [users, setUsers] = useState([]);
+
+  const navigate = useNavigate();
 
   const BASE_URL = import.meta.env.VITE_APP_API_URL;        // https://jsonplaceholder.typicode.com
   const SECRET = import.meta.env.VITE_APP_SECRET_PASSWORD;  // SECRET123
@@ -29,7 +32,7 @@ function Login() {
     }
 
     localStorage.setItem("loggedInUser", JSON.stringify(foundUser));
-    window.location.href = "/todos";
+    navigate("/todos"); // <-- Updated here
   }
 
   return (
